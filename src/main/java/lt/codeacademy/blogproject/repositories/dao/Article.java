@@ -36,7 +36,7 @@ public class Article {
     @Column(name = "image")
     private String image;
 
-    @OneToOne(mappedBy = "article")
+    @OneToOne
     @JoinColumn(name = "blog_user_id")
     private BlogUser creator;
 

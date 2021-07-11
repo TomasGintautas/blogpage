@@ -29,7 +29,7 @@ public class BlogComment {
     @Column(name = "text")
     private String text;
 
-    @OneToOne(mappedBy = "blogComment")
+    @OneToOne
     @JoinColumn(name = "blog_user_id")
     private BlogUser creator;
 

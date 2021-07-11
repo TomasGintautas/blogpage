@@ -1,7 +1,7 @@
 package lt.codeacademy.blogproject.repositories.dao;
 
 public enum AccessRights {
-    ADMIN,
+    GUEST,
     USER,
-    GUEST
+    ADMIN
 }

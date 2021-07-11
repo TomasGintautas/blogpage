@@ -35,15 +35,6 @@ public class BlogUser {
     @Column(name = "access")
     private AccessRights access;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "article_id")
-    private Article article;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "blog_comment_id")
-    private BlogComment blogComment;
-
     public BlogUser(String username, String password, AccessRights access) {
         this.username = username;
         this.password = password;

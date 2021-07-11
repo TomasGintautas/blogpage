@@ -41,9 +41,6 @@ public class BlogCommentService {
         blogCommentResponse.setText(blogCommentRequest.getText());
         blogCommentResponse.setCreator(blogCommentRequest.getCreator());
         blogCommentResponse.setCreatedAt(LocalDateTime.now());
-
-        //TODO: ne ta ID grazina
-        blogCommentResponse.setId(blogUserDao.getBlogUserByUsername(blogCommentRequest.getCreator()).getId());
         blogCommentResponse.setArticle_id(blogCommentRequest.getArticle_id());
         return blogCommentResponse;
     }
