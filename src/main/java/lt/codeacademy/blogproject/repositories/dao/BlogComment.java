@@ -29,8 +29,7 @@ public class BlogComment {
     @Column(name = "text")
     private String text;
 
-    @Transient
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "blogComment")
     @JoinColumn(name = "blog_user_id")
     private BlogUser creator;
 

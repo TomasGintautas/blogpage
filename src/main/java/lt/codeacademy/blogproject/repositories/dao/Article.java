@@ -36,8 +36,7 @@ public class Article {
     @Column(name = "image")
     private String image;
 
-    @Transient
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "article")
     @JoinColumn(name = "blog_user_id")
     private BlogUser creator;
 
