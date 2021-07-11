@@ -1,6 +1,5 @@
 package lt.codeacademy.blogproject.controllers;
 
-import lt.codeacademy.blogproject.controllers.dto.ArticleRequest;
 import lt.codeacademy.blogproject.controllers.dto.BlogCommentRequest;
 import lt.codeacademy.blogproject.controllers.dto.BlogCommentResponse;
 import lt.codeacademy.blogproject.services.BlogCommentService;
