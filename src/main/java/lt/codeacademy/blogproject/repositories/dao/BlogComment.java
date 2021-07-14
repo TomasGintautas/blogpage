@@ -23,7 +23,7 @@ public class BlogComment {
     private Long id;
 
     @CreationTimestamp
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "text")

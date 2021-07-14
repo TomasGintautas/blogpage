@@ -1,0 +1,87 @@
+html{
+    height: 100%;
+}
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Inter;
+}
+
+body{
+    height: 100%;
+}
+
+header{
+    height: 10%;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    padding-top: 20px;
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+}
+
+nav ul li{
+    margin: 10px;
+    font-size: 20px;
+}
+
+nav ul li:hover{
+    text-decoration: underline;
+}
+
+nav div {
+    margin-right: 16px;
+}
+
+.wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+label{
+    font-size: 12px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+.navForm{
+    display: flex;
+    align-items: center;
+}
+nav p{
+    font-size: 12px;
+}
+
+.loginButton{
+    background-color: #18a5b5;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 4px 0px 0px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+.spanStyle{
+    text-decoration: underline;
+    color: #01606b;
+}
+
+h1{
+    font-size: 24px;
+}

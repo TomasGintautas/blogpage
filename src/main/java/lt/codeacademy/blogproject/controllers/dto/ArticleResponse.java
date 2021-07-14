@@ -19,4 +19,5 @@ public class ArticleResponse {
     private String text;
     private String creator;
     private String image;
+    private String drinkCategory;
 }

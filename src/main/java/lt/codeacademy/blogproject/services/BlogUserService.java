@@ -3,7 +3,6 @@ package lt.codeacademy.blogproject.services;
 import lt.codeacademy.blogproject.controllers.dto.BlogUserRequest;
 import lt.codeacademy.blogproject.controllers.dto.BlogUserResponse;
 import lt.codeacademy.blogproject.repositories.BlogUserRepository;
-import lt.codeacademy.blogproject.repositories.dao.AccessRights;
 import lt.codeacademy.blogproject.repositories.dao.BlogUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class BlogUserService {
     @Transactional
     public BlogUserResponse createBlogUser(BlogUserRequest blogUserRequest){
         BlogUserResponse blogUserResponse = new BlogUserResponse();
-        blogUserDao.save(new BlogUser(blogUserRequest.getUsername(),blogUserRequest.getPassword(),AccessRights.USER));
+        blogUserDao.save(new BlogUser(blogUserRequest.getUsername(),blogUserRequest.getPassword()));
         blogUserResponse.setUsername(blogUserRequest.getUsername());
         return blogUserResponse;
     }

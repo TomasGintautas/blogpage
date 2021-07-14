@@ -24,7 +24,7 @@ public class Article {
     private Long id;
 
     @CreationTimestamp
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "title")
@@ -40,14 +40,19 @@ public class Article {
     @JoinColumn(name = "blog_user_id")
     private BlogUser creator;
 
+    @OneToOne
+    @JoinColumn(name = "drink_category_id")
+    private DrinkCategory drinkCategory;
+
     @OneToMany(mappedBy = "article",
             cascade = CascadeType.ALL)
     private List<BlogComment> blogComments;
 
-    public Article(String title, String text, String image, BlogUser creator) {
+    public Article(String title, String text, String image, BlogUser creator, DrinkCategory drinkCategory) {
         this.title = title;
         this.text = text;
         this.image = image;
         this.creator = creator;
+        this.drinkCategory = drinkCategory;
     }
 }

@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,12 +33,11 @@ public class BlogUser {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "access")
-    private AccessRights access;
+    @ManyToMany(mappedBy = "blogUsers")
+    private List<Role> roles;
 
-    public BlogUser(String username, String password, AccessRights access) {
+    public BlogUser(String username, String password) {
         this.username = username;
         this.password = password;
-        this.access = access;
     }
 }

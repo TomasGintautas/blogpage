@@ -4,6 +4,7 @@ import lt.codeacademy.blogproject.controllers.dto.ArticleRequest;
 import lt.codeacademy.blogproject.controllers.dto.ArticleResponse;
 import lt.codeacademy.blogproject.repositories.ArticleRepository;
 import lt.codeacademy.blogproject.repositories.BlogUserRepository;
+import lt.codeacademy.blogproject.repositories.DrinkCategoryRepository;
 import lt.codeacademy.blogproject.repositories.dao.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ public class ArticleService {
 
     private final ArticleRepository articleDao;
     private final BlogUserRepository blogUserDao;
+    private final DrinkCategoryRepository drinkCategoryDao;
 
     @Autowired
-    public ArticleService(ArticleRepository articleDao, BlogUserRepository blogUserDao) {
+    public ArticleService(ArticleRepository articleDao, BlogUserRepository blogUserDao, DrinkCategoryRepository drinkCategoryDao) {
         this.articleDao = articleDao;
         this.blogUserDao = blogUserDao;
+        this.drinkCategoryDao = drinkCategoryDao;
     }
 
     @Transactional
@@ -33,13 +36,15 @@ public class ArticleService {
                 (articleRequest.getTitle(),
                 articleRequest.getText(),
                 articleRequest.getImage(),
-                blogUserDao.getBlogUserByUsername(articleRequest.getCreator())));
+                blogUserDao.getBlogUserByUsername(articleRequest.getCreator()),
+                drinkCategoryDao.getDrinkCategoryByCategoryName(articleRequest.getDrinkCategory())));
 
         articleResponse.setTitle(articleRequest.getTitle());
         articleResponse.setImage(articleRequest.getImage());
         articleResponse.setText(articleRequest.getText());
         articleResponse.setCreatedAt(LocalDateTime.now());
         articleResponse.setCreator(articleRequest.getCreator());
+        articleResponse.setDrinkCategory(articleRequest.getDrinkCategory());
         return articleResponse;
     }
 
@@ -57,6 +62,7 @@ public class ArticleService {
         articleToUpdate.setText(articleRequest.getText());
         articleToUpdate.setCreator(blogUserDao.getBlogUserByUsername(articleRequest.getCreator()));
         articleToUpdate.setImage(articleRequest.getImage());
+        articleToUpdate.setDrinkCategory(drinkCategoryDao.getDrinkCategoryByCategoryName(articleRequest.getDrinkCategory()));
 
         articleDao.save(articleToUpdate);
 
@@ -65,6 +71,7 @@ public class ArticleService {
         articleResponse.setText(articleRequest.getText());
         articleResponse.setCreatedAt(LocalDateTime.now());
         articleResponse.setCreator(articleRequest.getCreator());
+        articleResponse.setDrinkCategory(articleRequest.getDrinkCategory());
 
         return articleResponse;
     }
@@ -78,7 +85,8 @@ public class ArticleService {
                         article.getTitle(),
                         article.getText(),
                         article.getCreator().getUsername(),
-                        article.getImage()))
+                        article.getImage(),
+                        article.getDrinkCategory().getCategoryName()))
                 .collect(Collectors.toList());
     }
 
@@ -92,7 +100,7 @@ public class ArticleService {
         articleResponse.setTitle(article.getTitle());
         articleResponse.setText(article.getText());
         articleResponse.setImage(article.getImage());
-
+        articleResponse.setDrinkCategory(article.getDrinkCategory().getCategoryName());
         return articleResponse;
     }
 }
