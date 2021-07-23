@@ -16,4 +16,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     Article getArticleById(Long id);
 
     Article getArticleByTitle(String title);
+
+    List<Article> getArticleByDrinkCategory(String category);
 }

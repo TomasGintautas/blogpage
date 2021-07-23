@@ -49,4 +49,9 @@ public class ArticleController {
     public ArticleResponse getOneArticle(@RequestParam(value = "id") Long id){
         return articleService.getOneArticle(id);
     }
+
+    @GetMapping(value = "/getListByDrinkType")
+    public List<ArticleResponse> getAllArticlesByDrinkType(@RequestBody String drinkType) {
+        return articleService.getArticlesByDrinkType(drinkType);
+    }
 }
