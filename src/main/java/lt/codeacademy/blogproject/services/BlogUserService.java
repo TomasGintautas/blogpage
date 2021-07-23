@@ -7,6 +7,10 @@ import lt.codeacademy.blogproject.repositories.RoleRepository;
 import lt.codeacademy.blogproject.repositories.dao.BlogUser;
 import lt.codeacademy.blogproject.repositories.dao.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
@@ -16,15 +20,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class BlogUserService {
+public class BlogUserService implements UserDetailsService {
 
     private final BlogUserRepository blogUserDao;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public BlogUserService(BlogUserRepository blogUserDao, RoleRepository roleRepository){
+    public BlogUserService(BlogUserRepository blogUserDao, RoleRepository roleRepository, PasswordEncoder encoder){
         this.blogUserDao = blogUserDao;
         this.roleRepository = roleRepository;
+        this.encoder = encoder;
     }
 
     @Transactional
@@ -45,5 +51,10 @@ public class BlogUserService {
     public List<BlogUserResponse> getBlogUsers(){
         return blogUserDao.getBlogUsers().stream()
                 .map(user -> new BlogUserResponse(user.getUsername())).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return blogUserDao.getBlogUserByUsername(username);
     }
 }
