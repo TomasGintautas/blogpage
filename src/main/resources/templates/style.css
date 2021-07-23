@@ -29,21 +29,19 @@ nav ul{
     display: flex;
 }
 
-nav ul li{
+nav ul li a{
     margin: 10px;
     font-size: 20px;
+    text-decoration: none;
+    color: black;
 }
 
-nav ul li:hover{
+nav ul li a:hover{
     text-decoration: underline;
 }
 
-nav div {
-    margin-right: 16px;
-}
-
 .wrapper {
-    max-width: 1240px;
+    max-width: 1250px;
     margin: 0 auto;
     padding: 0 10px;
 }
@@ -84,4 +82,40 @@ nav p{
 
 h1{
     font-size: 24px;
+}
+
+.mainGrid{
+    display: grid;
+    grid-template-columns: 300px 300px 300px 300px;
+    grid-gap: 10px;
+}
+
+main{
+    margin-top: 50px;
+}
+
+.gridImg{
+    width: 300px;
+    height: 345px;
+}
+footer{
+    margin-top: 20px;
+}
+
+.drinkCategory{
+    font-size: 14px;
+}
+
+.articleFooter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.articleAuthor{
+    font-size: 12px;
+}
+
+.articleCreationDate{
+    font-size: 10px;
 }

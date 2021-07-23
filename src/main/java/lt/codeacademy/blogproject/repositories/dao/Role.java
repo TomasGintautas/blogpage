@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @Column(name = "id")
@@ -24,9 +25,8 @@ public class Role {
     @Column(name = "role_name")
     private String roleName;
 
-    @ManyToMany
-    @JoinTable(name = "blog_user_role",
-     joinColumns = @JoinColumn(name = "blog_user_id"),
-     inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<BlogUser> blogUsers;
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + roleName;
+    }
 }

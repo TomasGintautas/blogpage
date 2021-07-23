@@ -44,7 +44,7 @@ GRANT USAGE, SELECT ON SEQUENCE drink_category_id_seq TO blog_user;
 CREATE TABLE role
 (
     id        BIGSERIAL PRIMARY KEY NOT NULL,
-    role_name VARCHAR(255)          NOT NULL
+    role_name VARCHAR(255) UNIQUE   NOT NULL
 );
 
 GRANT ALL PRIVILEGES ON TABLE role TO blog_user;
@@ -56,8 +56,8 @@ GRANT USAGE, SELECT ON SEQUENCE role_id_seq TO blog_user;
 
 CREATE TABLE blog_user_role
 (
-    blog_user_id    BIGSERIAL REFERENCES blog_user(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    role_id         BIGSERIAL REFERENCES role(id) ON UPDATE CASCADE
+    blog_user_id    BIGINT REFERENCES blog_user(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    role_id         BIGINT REFERENCES role(id) ON UPDATE CASCADE
 );
 
 GRANT ALL PRIVILEGES ON TABLE blog_user_role TO blog_user;

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DrinkCategoryRepository extends JpaRepository<DrinkCategory, Long> {
 
-    public DrinkCategory getDrinkCategoryByCategoryName(String name);
+    DrinkCategory getDrinkCategoryByCategoryName(String name);
 }
