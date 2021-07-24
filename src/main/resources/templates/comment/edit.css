@@ -92,34 +92,24 @@ main{
     display: block;
 }
 
-main section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 40px;
-}
 main section div form label{
     font-size: 18px;
     font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 6px;
+    margin: 10px 0;
 }
 
-main section div form{
+.leaveCommentDisplay{
     display: flex;
     flex-direction: column;
 }
 
-textarea{
+.leaveComment{
     resize: none;
+    margin-bottom: 30px;
+    font-size: 18px;
 }
 
-.title{
-    height: 30px;
-}
-
-.postArticleButton{
-    margin: 10px;
+.createComment{
     font-size: 20px;
     text-decoration: none;
     color: black;
@@ -127,14 +117,10 @@ textarea{
     border-radius: 4px;
     padding: 8px;
     font-weight: bolder;
+    text-align: center;
 }
 
-.postArticleButton:hover{
+.createComment:hover{
     color: #18a5b5;
     border: solid #18a5b5 2px;
-}
-
-select{
-    font-size: 16px;
-    height: 30px;
 }

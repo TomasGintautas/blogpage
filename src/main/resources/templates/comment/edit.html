@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cocktails blog</title>
+    <link rel="stylesheet" href="edit.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+</head>
+<body>
+<div class = "wrapper">
+    <header>
+        <nav>
+            <h1>BestCocktails.com</h1>
+            <ul>
+                <li><a href="">Gin</a></li>
+                <li><a href="">Vodka</a></li>
+                <li><a href="">Whisky</a></li>
+                <li><a href="">Rum</a></li>
+                <li><a href="">Tequila</a></li>
+            </ul>
+            <div class="dropdown">
+                <p class="dropItem">Hello, username</p>
+                <div class="dropdown-content">
+                    <a href="">Create Article</a>
+                    <a href="">Log Out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div>
+            <form class="leaveCommentDisplay">
+                <label>Edit comment:</label>
+                <textarea name="text" rows="5" class="leaveComment"></textarea>
+            </form>
+            <a class="createComment" href="">Update</a>
+        </div>
+    </main>
+    <footer> </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+html{
+    height: 100%;
+}
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Inter;
+}
+
+body{
+    height: 100%;
+}
+
+header{
+    height: 10%;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    padding-top: 20px;
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+}
+
+nav ul li a{
+    margin: 10px;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+nav ul li a:hover{
+    text-decoration: underline;
+}
+
+.wrapper {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.navForm{
+    display: flex;
+    align-items: center;
+}
+nav p{
+    font-size: 18px;
+}
+
+main{
+    margin-top: 50px;
+}
+
+.dropItem {
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.article{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.commentTitle{
+    text-align: center;
+}
+
+h3{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+h4{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.img{
+    width: 400px;
+    height: 460px;
+    margin-right: 60px;
+}
+
+.articleSection{
+    display: flex;
+    flex-direction: row;
+}
+
+.commentStyle{
+    background-color: lightgray;
+    border: solid 1px gray;
+    margin-bottom: 4px;
+}
+
+.commentAuthor{
+    font-weight: bold;
+}
+
+.commentHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px;
+    font-size: 20px;
+}
+
+.commentText{
+    padding: 4px;
+}
+
+main section div form label{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.leaveCommentDisplay{
+    display: flex;
+    flex-direction: column;
+}
+
+.leaveComment{
+    resize: none;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.createComment{
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+    border: solid black 1px;
+    border-radius: 4px;
+    padding: 8px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.createComment:hover{
+    color: #18a5b5;
+    border: solid #18a5b5 2px;
+}
+footer{
+    padding: 20px;
+}
+
+.crud{
+    font-size: 12px;
+    display: flex;
+    flex-direction: row;
+    padding: 4px;
+}
+
+.crudItem{
+    padding: 2px 8px;
+    margin-right: 8px;
+    text-decoration: none;
+    color: black;
+    border: solid black 1px;
+    border-radius: 4px;
+}
