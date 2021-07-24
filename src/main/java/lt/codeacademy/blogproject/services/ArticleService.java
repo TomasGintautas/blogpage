@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,32 +20,24 @@ public class ArticleService {
     private final ArticleRepository articleDao;
     private final BlogUserRepository blogUserDao;
     private final DrinkCategoryRepository drinkCategoryDao;
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    public ArticleService(ArticleRepository articleDao, BlogUserRepository blogUserDao, DrinkCategoryRepository drinkCategoryDao) {
+    public ArticleService(ArticleRepository articleDao, BlogUserRepository blogUserDao, DrinkCategoryRepository drinkCategoryDao, FileStorageService fileStorageService) {
         this.articleDao = articleDao;
         this.blogUserDao = blogUserDao;
         this.drinkCategoryDao = drinkCategoryDao;
+        this.fileStorageService = fileStorageService;
     }
 
     @Transactional
-    public ArticleResponse createArticle(ArticleRequest articleRequest) {
-        ArticleResponse articleResponse = new ArticleResponse();
-
-        articleDao.save(new Article
+    public Article createArticle(ArticleRequest articleRequest) throws IOException {
+        return articleDao.save(new Article
                 (articleRequest.getTitle(),
                 articleRequest.getText(),
-                articleRequest.getImage(),
+                fileStorageService.save(articleRequest.getImage()),
                 blogUserDao.getBlogUserByUsername(articleRequest.getCreator()),
                 drinkCategoryDao.getDrinkCategoryByCategoryName(articleRequest.getDrinkCategory())));
-
-        articleResponse.setTitle(articleRequest.getTitle());
-        articleResponse.setImage(articleRequest.getImage());
-        articleResponse.setText(articleRequest.getText());
-        articleResponse.setCreatedAt(LocalDateTime.now());
-        articleResponse.setCreator(articleRequest.getCreator());
-        articleResponse.setDrinkCategory(articleRequest.getDrinkCategory());
-        return articleResponse;
     }
 
     @Transactional
@@ -53,28 +45,28 @@ public class ArticleService {
         articleDao.delete(articleDao.getArticleById(articleRequest.getId()));
     }
 
-    @Transactional
-    public ArticleResponse updateArticle(ArticleRequest articleRequest) {
-        ArticleResponse articleResponse = new ArticleResponse();
-        Article articleToUpdate = articleDao.getArticleById(articleRequest.getId());
-
-        articleToUpdate.setTitle(articleRequest.getTitle());
-        articleToUpdate.setText(articleRequest.getText());
-        articleToUpdate.setCreator(blogUserDao.getBlogUserByUsername(articleRequest.getCreator()));
-        articleToUpdate.setImage(articleRequest.getImage());
-        articleToUpdate.setDrinkCategory(drinkCategoryDao.getDrinkCategoryByCategoryName(articleRequest.getDrinkCategory()));
-
-        articleDao.save(articleToUpdate);
-
-        articleResponse.setTitle(articleRequest.getTitle());
-        articleResponse.setImage(articleRequest.getImage());
-        articleResponse.setText(articleRequest.getText());
-        articleResponse.setCreatedAt(LocalDateTime.now());
-        articleResponse.setCreator(articleRequest.getCreator());
-        articleResponse.setDrinkCategory(articleRequest.getDrinkCategory());
-
-        return articleResponse;
-    }
+//    @Transactional
+//    public ArticleResponse updateArticle(ArticleRequest articleRequest) {
+//        ArticleResponse articleResponse = new ArticleResponse();
+//        Article articleToUpdate = articleDao.getArticleById(articleRequest.getId());
+//
+//        articleToUpdate.setTitle(articleRequest.getTitle());
+//        articleToUpdate.setText(articleRequest.getText());
+//        articleToUpdate.setCreator(blogUserDao.getBlogUserByUsername(articleRequest.getCreator()));
+//        articleToUpdate.setImage(articleRequest.getImage());
+//        articleToUpdate.setDrinkCategory(drinkCategoryDao.getDrinkCategoryByCategoryName(articleRequest.getDrinkCategory()));
+//
+//        articleDao.save(articleToUpdate);
+//
+//        articleResponse.setTitle(articleRequest.getTitle());
+//        articleResponse.setImage(articleRequest.getImage());
+//        articleResponse.setText(articleRequest.getText());
+//        articleResponse.setCreatedAt(LocalDateTime.now());
+//        articleResponse.setCreator(articleRequest.getCreator());
+//        articleResponse.setDrinkCategory(articleRequest.getDrinkCategory());
+//
+//        return articleResponse;
+//    }
 
     public List<ArticleResponse> getAllArticles(){
         return articleDao.getArticles()

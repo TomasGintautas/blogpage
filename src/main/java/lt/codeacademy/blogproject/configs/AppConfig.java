@@ -21,7 +21,7 @@ import java.util.Locale;
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
 
-    @Value("${dir.uploads}")
+    @Value("uploads")
     private String uploadDir;
 
     @Bean

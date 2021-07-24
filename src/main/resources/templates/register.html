@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Cocktails blog</title>
-    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" type = "text/css" href="/css/register.css" th:href="@{/css/register.css}"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
     <meta charset="utf-8">
@@ -29,7 +29,7 @@
                         <label class="navLabel">Password:</label>
                         <input type="password" name="password">
                     </form>
-                    <a class="button" href="index.html">Login</a>
+                    <a class="button" href="../static/index.html">Login</a>
                 </div>
                 <p>Don't have an account? <a class="spanStyle" href="register.html">Click here</a> to register!</p>
             </div>
@@ -52,7 +52,7 @@
                     <input type="password" name="confirmPassword">
                 </form>
             </div>
-            <a class="button" href="index.html">Register</a>
+            <a class="button" href="../static/index.html">Register</a>
         </section>
     </main>
 </div>

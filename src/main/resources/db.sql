@@ -118,3 +118,25 @@ VALUES
 (3, 'WHISKY'),
 (4, 'RUM'),
 (5, 'TEQUILA');
+
+--------------
+
+INSERT INTO blog_user (id, created_at, username, password)
+VALUES
+(1, CURRENT_TIMESTAMP, 'admin', 'admin');
+
+--------------
+
+INSERT INTO blog_user_role (blog_user_id, role_id)
+VALUES
+(1, 1);
+--------------
+
+INSERT INTO article (created_at, title, text, image, blog_user_id, drink_category_id)
+VALUES
+(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
+(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
+(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
+(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
+(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
+(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1);

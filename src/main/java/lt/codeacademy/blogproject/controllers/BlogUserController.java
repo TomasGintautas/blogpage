@@ -1,37 +1,48 @@
 package lt.codeacademy.blogproject.controllers;
 
+import lombok.SneakyThrows;
 import lt.codeacademy.blogproject.controllers.dto.BlogUserRequest;
-import lt.codeacademy.blogproject.controllers.dto.BlogUserResponse;
+import lt.codeacademy.blogproject.repositories.dao.BlogUser;
 import lt.codeacademy.blogproject.services.BlogUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 public class BlogUserController {
 
     @Autowired
     private BlogUserService blogUserService;
 
-    @PostMapping(value = "/createUser")
-    public ResponseEntity createBlogUser(@RequestBody BlogUserRequest blogUserRequest){
-        try{
-            return ResponseEntity.ok(blogUserService.createBlogUser(blogUserRequest));
+    @SneakyThrows
+    @PostMapping(value = "/register")
+    public String createBlogUser(@RequestBody BlogUserRequest blogUserRequest, Model model){
+
+        if(!blogUserRequest.getPassword().equals(blogUserRequest.getConfirmPassword())){
+            model.addAttribute("blogUserRequest", blogUserRequest);
+            return "register";
         }
-        catch (Exception e){
-            return ResponseEntity.badRequest().build();
+        else{
+            blogUserService.createBlogUser(blogUserRequest);
         }
+        return "redirect:/";
     }
 
-    @GetMapping(value = "/getUser")
-    public String getBlogUserUsername(Long id){
-        return blogUserService.getBlogUserUsername(id).getUsername();
+    @GetMapping(value = "/register")
+    public String createBlogUser(){
+        return "register";
     }
 
-    @GetMapping(value = "/allBlogUsers")
-    public List<BlogUserResponse> getBlogUsers(){
-        return blogUserService.getBlogUsers();
+    @GetMapping
+    public String getLogin(Model model, @AuthenticationPrincipal BlogUser blogUser){
+        if(blogUser == null){
+            model.addAttribute("blogUser", new BlogUser());
+            return "index";
+        }
+        return "redirect:/";
     }
+
+
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Cocktails blog</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" type = "text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
         <meta charset="utf-8">
@@ -37,19 +37,15 @@
         </header>
         <main>
             <section class="mainGrid">
-                <article>
+                <article th:each="articles: ${articleList}">
                     <div>
                         <img class="gridImg" src="https://www.thefooddictator.com/wp-content/uploads/2015/01/aviation.jpg" alt="aviation">
                     </div>
-                    <h3 class="articleTitle">
-                        Aviation
-                    </h3>
-                    <div class = "drinkCategory">
-                        Category: Gin
-                    </div>
+                    <h3 class="articleTitle" th:text="${articles.getTitle()}"></h3>
+                    <div class = "drinkCategory" th:text="${articles.getDrinkCategory()}"></div>
                     <div class="articleFooter">
-                        <div class="articleAuthor">Author: useris69xxx</div>
-                        <div class="articleCreationDate">Created at: laikaslaikas</div>
+                        <div class="articleAuthor" th:text="${articles.getCreator()}"></div>
+                        <div class="articleCreationDate" th:text="${articles.getCreatedAt()}"></div>
                     </div>
                 </article>
             </section>
