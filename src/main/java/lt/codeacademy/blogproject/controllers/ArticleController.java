@@ -26,6 +26,7 @@ public class ArticleController {
         return "index";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/articleDelete")
     public void deleteArticle (@RequestBody ArticleRequest articleRequest){
         articleService.deleteArticle(articleRequest);

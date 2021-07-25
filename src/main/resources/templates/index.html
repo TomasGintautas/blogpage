@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title>Cocktails blog</title>
         <link rel="stylesheet" type = "text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
@@ -11,7 +12,7 @@
     <div class = "wrapper">
         <header>
             <nav>
-                <h1>BestCocktails.com</h1>
+                <h1 href="index" >BestCocktails.com</h1>
                 <ul>
                     <li><a href="">Gin</a></li>
                     <li><a href="">Vodka</a></li>
@@ -20,18 +21,16 @@
                     <li><a href="">Tequila</a></li>
                 </ul>
                 <div>
-                    <div class="navForm">
-                        <form>
-                        <label>Username:</label>
-                        <input type="text" name="username">
-                        </form>
-                        <form>
-                            <label>Password:</label>
-                            <input type="password" name="password">
-                        </form>
-                        <a class="loginButton" href="index.html">Login</a>
+                    <a href="index.html" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
+                    <div class="dropdown" >
+                        <p class="dropItem" sec:authorize="isAuthenticated()">
+                            Hello, <span sec:authentication="principal.username"> </span>
+                        </p>
+                        <div class="dropdown-content">
+                            <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
+                            <a href="/logout">Log Out</a>
+                        </div>
                     </div>
-                    <p>Don't have an account? <a class="spanStyle" href="register.html">Click here</a> to register!</p>
                 </div>
             </nav>
         </header>

@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Cocktails blog</title>
-    <link rel="stylesheet" type = "text/css" href="/css/register.css" th:href="@{/css/register.css}"/>
+    <link rel="stylesheet" type = "text/css" href="/css/login.css" th:href="@{/css/login.css}"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
     <meta charset="utf-8">
@@ -25,15 +25,14 @@
     <main>
         <section>
             <div class="regForms">
-                <form method="POST" th:action="@{/register}" th:object="${blogUserRequest}">
+                <form method="POST" th:action="@{/login}" th:object="${blogUser}">
                     <label>Username:</label>
                     <input type="username" id = "username" name="username" th:field = "*{username}">
                     <label>Password:</label>
                     <input type="password" name="password" id="password" th:field="*{password}">
-                    <p>Password must contain at least one number and capital letter</p>
-                    <label>Confirm Password:</label>
-                    <input type="password" name="confirmPassword" id = "confirmPassword" th:field="*{confirmPassword}">
-                   <button type="submit" class="button">Register</button>
+                    <br>
+                    <p>Don't have an account? <a class="spanStyle" href="register.html">Click here</a> to register!</p>
+                    <button type="submit" class="button">Log In</button>
                 </form>
             </div>
         </section>

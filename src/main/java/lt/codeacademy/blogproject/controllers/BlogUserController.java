@@ -38,11 +38,11 @@ public class BlogUserController {
         return "register";
     }
 
-    @GetMapping
-    public String getLogin(Model model, @AuthenticationPrincipal BlogUser blogUser){
+    @GetMapping(value = "/login")
+    public String login(Model model, @AuthenticationPrincipal BlogUser blogUser){
         if(blogUser == null){
             model.addAttribute("blogUser", new BlogUser());
-            return "index";
+            return "login";
         }
         return "redirect:/";
     }
