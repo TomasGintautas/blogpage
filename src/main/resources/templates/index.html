@@ -36,7 +36,7 @@
         </header>
         <main>
             <section class="mainGrid">
-                <article th:each="articles: ${articleList}">
+                <article th:each="articles: ${articleList}" th:onclick="'location.href = \'/articles/' + ${articles.id} + '/view\';'">
                     <div>
                         <img class="gridImg" th:src="@{/uploads/{image}(image = ${articles.image})}">
                     </div>
@@ -47,6 +47,7 @@
                         <div class="articleCreationDate" th:text="${articles.getCreatedAt()}"></div>
                     </div>
                 </article>
+                <img src="C:/Users/tomis/Desktop/basilsmash.jpg" alt="x">
             </section>
         </main>
     </div>

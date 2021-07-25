@@ -2,6 +2,7 @@ package lt.codeacademy.blogproject.controllers;
 
 import lt.codeacademy.blogproject.controllers.dto.ArticleRequest;
 import lt.codeacademy.blogproject.controllers.dto.ArticleResponse;
+import lt.codeacademy.blogproject.repositories.dao.Article;
 import lt.codeacademy.blogproject.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,9 +62,10 @@ public class ArticleController {
         return "index";
     }
 
-    @GetMapping(value = "/articleGetOne")
-    public ArticleResponse getOneArticle(@RequestParam(value = "id") Long id){
-        return articleService.getOneArticle(id);
+    @GetMapping(value = "/{id}/view")
+    public String getOneArticle(@PathVariable("id") Article article, Model model){
+        model.addAttribute("articleResponse", article);
+        return "articles/view";
     }
 
     @GetMapping(value = "/getListByDrinkType")
