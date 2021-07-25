@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Cocktails blog</title>
-  <link rel="stylesheet" href="../../static/css/create.css">
+  <link rel="stylesheet" type = "text/css" href="/css/create.css" th:href="@{/css/create.css}"/>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
   <meta charset="utf-8">
@@ -19,11 +20,15 @@
         <li><a href="">Rum</a></li>
         <li><a href="">Tequila</a></li>
       </ul>
-      <div class="dropdown">
-        <p class="dropItem">Hello, username</p>
-        <div class="dropdown-content">
-          <a href="">Create Article</a>
-          <a href="">Log Out</a>
+      <div>
+        <div class="dropdown" >
+          <p class="dropItem" sec:authorize="isAuthenticated()">
+            Hello, <span sec:authentication="principal.username"> </span>
+          </p>
+          <div class="dropdown-content">
+            <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
+            <a href="/logout">Log Out</a>
+          </div>
         </div>
       </div>
     </nav>
@@ -31,30 +36,27 @@
   <main>
     <section>
       <div>
-        <form>
+        <form  method="POST" th:action="@{/articles/create}" th:object="${articleRequest}" enctype="multipart/form-data">
           <label>Title:</label>
-          <input type="text" name="title" class="title">
-        </form>
-        <form>
+          <input type="text" name="title" class="title" id="title" th:field = "*{title}">
           <label>Text:</label>
-          <textarea name="text" cols="60" rows="25"></textarea>
-        </form>
-        <form>
-          <label for="drinks">Choose Drink Category:</label>
-          <select id="drinks" name="drinks">
-            <option value="gin">Gin</option>
-            <option value="vodka">Vodka</option>
-            <option value="whisky">Whisky</option>
-            <option value="rum">Rum</option>
-            <option value="tequila">Tequila</option>
+          <textarea name="text" cols="60" rows="25" id="text" th:field = "*{text}"></textarea>
+
+          <label for="drinkCategory">Choose Drink Category:</label>
+          <select name="drinks" id ="drinkCategory" th:field ="*{drinkCategory}">
+            <option value="GIN">Gin</option>
+            <option value="VODKA">Vodka</option>
+            <option value="WHISKY">Whisky</option>
+            <option value="RUM">Rum</option>
+            <option value="TEQUILA">Tequila</option>
           </select>
-        </form>
-        <form>
-          <label>Article picture:</label>
-          <input type="file" name="file">
+
+          <label for="image">Article picture:</label>
+          <input type="file" name="image" id="image">
+
+        <button class="postArticleButton" href="">Post Article</button>
         </form>
       </div>
-      <a class="postArticleButton" href="">Post Article</a>
     </section>
   </main>
 </div>

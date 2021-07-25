@@ -38,7 +38,7 @@
             <section class="mainGrid">
                 <article th:each="articles: ${articleList}">
                     <div>
-                        <img class="gridImg" src="https://www.thefooddictator.com/wp-content/uploads/2015/01/aviation.jpg" alt="aviation">
+                        <img class="gridImg" th:src="@{/uploads/{image}(image = ${articles.image})}">
                     </div>
                     <h3 class="articleTitle" th:text="${articles.getTitle()}"></h3>
                     <div class = "drinkCategory" th:text="${articles.getDrinkCategory()}"></div>

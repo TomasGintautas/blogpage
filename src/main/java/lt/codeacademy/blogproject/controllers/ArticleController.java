@@ -5,10 +5,15 @@ import lt.codeacademy.blogproject.controllers.dto.ArticleResponse;
 import lt.codeacademy.blogproject.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,10 +25,18 @@ public class ArticleController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/articles/create")
-    public String createArticle (@RequestParam ArticleRequest articleRequest) throws IOException {
-
+    public String createArticle (@Valid ArticleRequest articleRequest) throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        articleRequest.setCreator(currentPrincipalName);
         articleService.createArticle(articleRequest);
         return "index";
+    }
+
+    @GetMapping(value = "/articles/create")
+    public String createArticle(Model model){
+        model.addAttribute("articleRequest", new ArticleRequest());
+        return "/articles/create";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -56,5 +69,10 @@ public class ArticleController {
     @GetMapping(value = "/getListByDrinkType")
     public List<ArticleResponse> getAllArticlesByDrinkType(@RequestBody String drinkType) {
         return articleService.getArticlesByDrinkType(drinkType);
+    }
+
+    @GetMapping
+    public String home(HttpServletRequest request, HttpSession session) {
+        return "redirect:/index";
     }
 }
