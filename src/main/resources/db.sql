@@ -17,8 +17,8 @@ CREATE TABLE blog_user
 (
     id          BIGSERIAL PRIMARY KEY   NOT NULL,
     created_at  TIMESTAMP DEFAULT now() NOT NULL,
-    username    VARCHAR(20) UNIQUE      NOT NULL,
-    password    VARCHAR(30)             NOT NULL
+    username    VARCHAR(40) UNIQUE      NOT NULL,
+    password    VARCHAR(255)            NOT NULL
 );
 
 GRANT ALL PRIVILEGES ON TABLE blog_user TO blog_user;

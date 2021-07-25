@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 public class BlogUserController {
 
@@ -18,7 +20,7 @@ public class BlogUserController {
 
     @SneakyThrows
     @PostMapping(value = "/register")
-    public String createBlogUser(@RequestBody BlogUserRequest blogUserRequest, Model model){
+    public String createBlogUser(@Valid BlogUserRequest blogUserRequest, Model model){
 
         if(!blogUserRequest.getPassword().equals(blogUserRequest.getConfirmPassword())){
             model.addAttribute("blogUserRequest", blogUserRequest);
@@ -31,7 +33,8 @@ public class BlogUserController {
     }
 
     @GetMapping(value = "/register")
-    public String createBlogUser(){
+    public String createBlogUser(Model model){
+        model.addAttribute("blogUserRequest", new BlogUserRequest());
         return "register";
     }
 
@@ -43,6 +46,4 @@ public class BlogUserController {
         }
         return "redirect:/";
     }
-
-
 }
