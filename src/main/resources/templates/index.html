@@ -21,7 +21,7 @@
                     <li><a href="">Tequila</a></li>
                 </ul>
                 <div>
-                    <a href="index.html" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
+                    <a href="login" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
                     <div class="dropdown" >
                         <p class="dropItem" sec:authorize="isAuthenticated()">
                             Hello, <span sec:authentication="principal.username"> </span>
@@ -47,7 +47,6 @@
                         <div class="articleCreationDate" th:text="${articles.getCreatedAt()}"></div>
                     </div>
                 </article>
-                <img src="C:/Users/tomis/Desktop/basilsmash.jpg" alt="x">
             </section>
         </main>
     </div>

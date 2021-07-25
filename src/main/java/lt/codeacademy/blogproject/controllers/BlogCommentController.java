@@ -5,6 +5,7 @@ import lt.codeacademy.blogproject.controllers.dto.BlogCommentResponse;
 import lt.codeacademy.blogproject.services.BlogCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,11 +39,5 @@ public class BlogCommentController {
     @PostMapping(value = "/commentDelete")
     public void deleteBlogComment(@RequestBody BlogCommentRequest blogCommentRequest){
         blogCommentService.deleteBlogComment(blogCommentRequest);
-    }
-
-    @GetMapping(value = "/getCommentsForArticle")
-    @ResponseBody
-    public List<BlogCommentResponse> getAllBlogCommentsForArticle(@RequestParam(value = "article_id") Long article_id){
-        return blogCommentService.getAllBlogCommentsForArticle(article_id);
     }
 }

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Cocktails blog</title>
     <link rel="stylesheet" href="../../static/css/view.css">
+    <link rel="stylesheet" type = "text/css" href="/css/view.css" th:href="@{/css/view.css}"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
     <meta charset="utf-8">
@@ -19,26 +21,28 @@
                     <li><a href="">Rum</a></li>
                     <li><a href="">Tequila</a></li>
                 </ul>
-                <div class="dropdown">
-                    <p class="dropItem">Hello, username</p>
-                    <div class="dropdown-content">
-                        <a href="">Create Article</a>
-                        <a href="">Log Out</a>
+                <div>
+                    <a href="login" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
+                    <div class="dropdown" >
+                        <p class="dropItem" sec:authorize="isAuthenticated()">
+                            Hello, <span sec:authentication="principal.username"> </span>
+                        </p>
+                        <div class="dropdown-content">
+                            <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
+                            <a href="/logout">Log Out</a>
+                        </div>
                     </div>
                 </div>
             </nav>
         </header>
         <main>
-            <section class="article">
-                <h3>GET TITLE</h3>
+            <section class="article" th:object="${article}">
+                <h3 th:text="${article.getTitle()}"></h3>
                 <article class="articleSection">
-                    <img class="img" src="https://www.thefooddictator.com/wp-content/uploads/2015/01/aviation.jpg" alt="aviation">
-                    <div>
-                        ARTICLE TEXT article text ARTICLE TEXT article text ARTICLE TEXT article text
-                        ARTICLE TEXT article text ARTICLE TEXT article text ARTICLE TEXT article text
-                    </div>
+                    <img class="img" th:src="@{/uploads/{image}(image = ${article.image})}">
+                    <div th:text="${article.getText()}"></div>
                 </article>
-                <div class="crud">
+                <div class="crud" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                     <a href="" class="crudItem">delete</a>
                     <a href="" class="crudItem">edit</a>
                 </div>
@@ -46,35 +50,24 @@
             <section>
                 <h4 class="commentTitle">Comments</h4>
                 <div>
-                    <div class = "commentStyle">
+                    <div class = "commentStyle" th:each="comments: ${commentList}">
                         <div class="commentHeader">
-                            <div class="commentAuthor">Autorius</div>
-                            <div>data</div>
+                            <div class="commentAuthor" th:text="${comments.getCreator()}">Autorius</div>
+                            <div th:text = "${comments.getCreatedAt()}"></div>
                         </div>
-                        <div class="commentText">Komentaras</div>
+                        <div class="commentText" th:text="${comments.getText()}"></div>
                         <div class="crud">
-                            <a href="" class="crudItem">delete</a>
-                            <a href="" class="crudItem">edit</a>
-                        </div>
-                    </div>
-                    <div class = "commentStyle">
-                        <div class="commentHeader">
-                            <div class="commentAuthor">Autorius</div>
-                            <div>data</div>
-                        </div>
-                        <div class="commentText">Komentaras</div>
-                        <div class="crud">
-                            <a href="" class="crudItem">delete</a>
+                            <a href="" class="crudItem" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">delete</a>
                             <a href="" class="crudItem">edit</a>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <form class="leaveCommentDisplay">
+                <div sec:authorize="isAuthenticated()">
+                    <form class="leaveCommentDisplay" method="post" th:action="@{/articles/{id}/view(id = ${article.id})}" th:object="${newCommentRequest}">
                         <label>Leave a comment:</label>
-                        <textarea name="text" rows="5" class="leaveComment"></textarea>
+                        <textarea name="text" rows="5" class="leaveComment" id="text" th:field ="*{text}"></textarea>
+                        <button class="createComment" href="index">Leave Comment</button>
                     </form>
-                    <a class="createComment" href="">Leave Comment</a>
                 </div>
             </section>
         </main>

@@ -2,8 +2,11 @@ package lt.codeacademy.blogproject.controllers;
 
 import lt.codeacademy.blogproject.controllers.dto.ArticleRequest;
 import lt.codeacademy.blogproject.controllers.dto.ArticleResponse;
+import lt.codeacademy.blogproject.controllers.dto.BlogCommentRequest;
+import lt.codeacademy.blogproject.controllers.dto.BlogUserRequest;
 import lt.codeacademy.blogproject.repositories.dao.Article;
 import lt.codeacademy.blogproject.services.ArticleService;
+import lt.codeacademy.blogproject.services.BlogCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -23,6 +26,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private BlogCommentService commentService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/articles/create")
@@ -62,10 +68,21 @@ public class ArticleController {
         return "index";
     }
 
-    @GetMapping(value = "/{id}/view")
-    public String getOneArticle(@PathVariable("id") Article article, Model model){
-        model.addAttribute("articleResponse", article);
+    @GetMapping(value = "/articles/{id}/view")
+    public String getOneArticle(@PathVariable("id") Long id, Model model){
+        model.addAttribute("article", articleService.getOneArticle(id));
+        model.addAttribute("commentList", commentService.getAllBlogCommentsForArticle(id));
+        model.addAttribute("newCommentRequest", new BlogCommentRequest());
         return "articles/view";
+    }
+
+    @PostMapping(value = "/articles/{id}/view")
+    public String createComment(@Valid BlogCommentRequest blogCommentRequest, @PathVariable("id") Long id){
+        blogCommentRequest.setArticle_id(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        blogCommentRequest.setCreator(authentication.getName());
+        commentService.createBlogComment(blogCommentRequest);
+        return "redirect:/";
     }
 
     @GetMapping(value = "/getListByDrinkType")
