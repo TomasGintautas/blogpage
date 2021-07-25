@@ -33,7 +33,11 @@ public class BlogUserService implements UserDetailsService {
     @Transactional
     public BlogUser createBlogUser(BlogUserRequest blogUserRequest) throws RoleNotFoundException {
         Set<Role> roles = Set.of(roleRepository.getRoleByRoleName("USER").orElseThrow(() -> new RoleNotFoundException("USER")));
-        return blogUserDao.save(new BlogUser(blogUserRequest.getUsername(),encoder.encode(blogUserRequest.getPassword()),roles));
+        BlogUser user = new BlogUser();
+        user.setUsername(blogUserRequest.getUsername());
+        user.setPassword(encoder.encode(blogUserRequest.getPassword()));
+        user.setRoles(roles);
+        return blogUserDao.save(user);
     }
 
     @Override
