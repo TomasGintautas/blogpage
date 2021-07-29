@@ -10,7 +10,7 @@ import java.nio.file.Path;
 @Service
 public class FileStorageService {
 
-    @Value("uploads")
+    @Value("${dir.uploads}")
     private String uploadDir;
 
     public String save(MultipartFile file) throws IOException {

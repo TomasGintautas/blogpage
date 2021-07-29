@@ -44,6 +44,6 @@ public class BlogUserController {
             model.addAttribute("blogUser", new BlogUser());
             return "login";
         }
-        return "redirect:/";
+        return "index";
     }
 }

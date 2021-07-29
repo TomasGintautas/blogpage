@@ -1,43 +1,36 @@
 package lt.codeacademy.blogproject.controllers;
 
 import lt.codeacademy.blogproject.controllers.dto.BlogCommentRequest;
-import lt.codeacademy.blogproject.controllers.dto.BlogCommentResponse;
+import lt.codeacademy.blogproject.repositories.dao.BlogComment;
 import lt.codeacademy.blogproject.services.BlogCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
-@RestController
+@Controller
 public class BlogCommentController {
 
     @Autowired
     private BlogCommentService blogCommentService;
 
-    @PostMapping(value = "/commentCreate")
-    public ResponseEntity createBlogComment (@RequestBody BlogCommentRequest blogCommentRequest){
-        try{
-            return ResponseEntity.ok(blogCommentService.createBlogComment(blogCommentRequest));
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+    @PostMapping(value = "/comment/{id}/edit")
+    public String updateBlogComment(@Valid BlogCommentRequest blogCommentRequest){
+        blogCommentService.updateBlogComment(blogCommentRequest);
+        return "redirect:/";
     }
 
-    @PostMapping(value = "/commentUpdate")
-    public ResponseEntity updateBlogComment(@RequestBody BlogCommentRequest blogCommentRequest){
-        try{
-            return ResponseEntity.ok(blogCommentService.updateBlogComment(blogCommentRequest));
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+    @GetMapping(value = "/comment/{id}/edit")
+    public String updateBlogComment(@PathVariable("id") Long id, Model model){
+        model.addAttribute("comment", blogCommentService.getOneComment(id));
+        return "/comment/edit";
     }
 
-    @PostMapping(value = "/commentDelete")
-    public void deleteBlogComment(@RequestBody BlogCommentRequest blogCommentRequest){
-        blogCommentService.deleteBlogComment(blogCommentRequest);
+    @GetMapping(value = "/comment/{id}/delete")
+    public String deleteBlogComment(@PathVariable("id") Long id){
+        blogCommentService.deleteBlogComment(id);
+        return "redirect:/";
     }
 }

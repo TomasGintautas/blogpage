@@ -9,34 +9,34 @@
     <meta charset="utf-8">
 </head>
 <body>
-<div class = "wrapper">
-    <header>
-        <nav>
-            <h1>BestCocktails.com</h1>
-            <ul>
-                <li><a href="">Gin</a></li>
-                <li><a href="">Vodka</a></li>
-                <li><a href="">Whisky</a></li>
-                <li><a href="">Rum</a></li>
-                <li><a href="">Tequila</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <div class="regForms">
-                <form method="POST" th:action="@{/login}" th:object="${blogUser}">
-                    <label>Username:</label>
-                    <input type="username" id = "username" name="username" th:field = "*{username}">
-                    <label>Password:</label>
-                    <input type="password" name="password" id="password" th:field="*{password}">
-                    <br>
-                    <p>Don't have an account? <a class="spanStyle" href="register.html">Click here</a> to register!</p>
-                    <button type="submit" class="button">Log In</button>
-                </form>
-            </div>
-        </section>
-    </main>
-</div>
+    <div class = "wrapper">
+        <header>
+            <nav>
+                <h1>BestCocktails.com</h1>
+                <ul>
+                    <li><a href="">Gin</a></li>
+                    <li><a href="">Vodka</a></li>
+                    <li><a href="">Whisky</a></li>
+                    <li><a href="">Rum</a></li>
+                    <li><a href="">Tequila</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section>
+                <div class="regForms">
+                    <form method="POST" th:action="@{/login}" th:object="${blogUser}">
+                        <label>Username:</label>
+                        <input type="username" id = "username" name="username" th:field = "*{username}">
+                        <label>Password:</label>
+                        <input type="password" name="password" id="password" th:field="*{password}">
+                        <br>
+                        <p>Don't have an account? <a class="spanStyle" href="register">Click here</a> to register!</p>
+                        <button type="submit" class="button">Log In</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 </html>

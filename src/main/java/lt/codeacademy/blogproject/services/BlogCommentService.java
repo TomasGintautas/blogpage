@@ -61,8 +61,8 @@ public class BlogCommentService {
     }
 
     @Transactional
-    public void deleteBlogComment(BlogCommentRequest blogCommentRequest) {
-        blogCommentDao.delete(blogCommentDao.getBlogCommentById(blogCommentRequest.getId()));
+    public void deleteBlogComment(Long id) {
+        blogCommentDao.delete(blogCommentDao.getBlogCommentById(id));
     }
 
     public List<BlogCommentResponse> getAllBlogCommentsForArticle(Long article_id) {
@@ -76,5 +76,9 @@ public class BlogCommentService {
                         comment.getCreator().getUsername(),
                         comment.getArticle().getId()))
                 .collect(Collectors.toList());
+    }
+
+    public BlogComment getOneComment(Long id) {
+        return  blogCommentDao.getBlogCommentById(id);
     }
 }

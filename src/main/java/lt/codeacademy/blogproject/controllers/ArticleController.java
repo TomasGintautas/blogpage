@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -47,7 +46,7 @@ public class ArticleController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(value = "/articleDelete")
+    @PostMapping(value = "/deleteArticle")
     public void deleteArticle (@RequestBody ArticleRequest articleRequest){
         articleService.deleteArticle(articleRequest);
     }

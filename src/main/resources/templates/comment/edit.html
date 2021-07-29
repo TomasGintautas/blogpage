@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Cocktails blog</title>
-    <link rel="stylesheet" href="../../static/css/edit.css">
+    <link rel="stylesheet" type = "text/css" href="/css/editComment.css" th:href="@{/css/editComment.css}"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
     <meta charset="utf-8">
@@ -11,7 +12,7 @@
 <div class = "wrapper">
     <header>
         <nav>
-            <h1>BestCocktails.com</h1>
+            <h1 href="index" >BestCocktails.com</h1>
             <ul>
                 <li><a href="">Gin</a></li>
                 <li><a href="">Vodka</a></li>
@@ -19,22 +20,27 @@
                 <li><a href="">Rum</a></li>
                 <li><a href="">Tequila</a></li>
             </ul>
-            <div class="dropdown">
-                <p class="dropItem">Hello, username</p>
-                <div class="dropdown-content">
-                    <a href="">Create Article</a>
-                    <a href="">Log Out</a>
+            <div>
+                <a href="login" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
+                <div class="dropdown" >
+                    <p class="dropItem" sec:authorize="isAuthenticated()">
+                        Hello, <span sec:authentication="principal.username"> </span>
+                    </p>
+                    <div class="dropdown-content">
+                        <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
+                        <a href="/logout">Log Out</a>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
     <main>
         <div>
-            <form class="leaveCommentDisplay">
+            <form class="leaveCommentDisplay" method="post" th:object="${comment}" th:action="@{/comment/{id}/edit(id = ${comment.id})}">
                 <label>Edit comment:</label>
-                <textarea name="text" rows="5" class="leaveComment"></textarea>
+                <textarea name="text" rows="5" class="leaveComment" th:text="*{text}"></textarea>
+                <button class="createComment">Update</button>
             </form>
-            <a class="createComment" href="">Update</a>
         </div>
     </main>
     <footer> </footer>
