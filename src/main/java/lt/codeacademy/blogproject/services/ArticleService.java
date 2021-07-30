@@ -91,18 +91,4 @@ public class ArticleService {
         articleResponse.setDrinkCategory(article.getDrinkCategory().getCategoryName());
         return articleResponse;
     }
-
-    public List<ArticleResponse> getArticlesByDrinkType(String drinkType){
-        return articleDao.getArticleByDrinkCategory(drinkType)
-                .stream()
-                .map(article -> new ArticleResponse(
-                        article.getId(),
-                        article.getCreatedAt(),
-                        article.getTitle(),
-                        article.getText(),
-                        article.getCreator().getUsername(),
-                        article.getImage(),
-                        article.getDrinkCategory().getCategoryName()))
-                .collect(Collectors.toList());
-    }
 }
