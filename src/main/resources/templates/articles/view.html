@@ -13,7 +13,7 @@
     <div class = "wrapper">
         <header>
             <nav>
-                <h1>BestCocktails.com</h1>
+                <h1><a href="index">BestCocktails.com</a></h1>
                 <ul>
                     <li><a href="">Gin</a></li>
                     <li><a href="">Vodka</a></li>
@@ -43,8 +43,8 @@
                     <div th:text="${article.getText()}"></div>
                 </article>
                 <div class="crud" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                    <a href="" class="crudItem">delete</a>
-                    <a href="" class="crudItem">edit</a>
+                    <a th:href="@{/articles/{id}/delete(id = ${article.id})}" class="crudItem">delete</a>
+                    <a th:href="@{/articles/{id}/edit(id = ${article.id})}" class="crudItem">edit</a>
                 </div>
             </section>
             <section>

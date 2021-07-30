@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Cocktails blog</title>
-    <link rel="stylesheet" href="../../static/css/create.css">
+    <link rel="stylesheet" href="../../static/css/editArticle.css">
+    <link rel="stylesheet" type = "text/css" href="/css/editArticle.css" th:href="@{/css/editArticle.css}"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
     <meta charset="utf-8">
@@ -11,7 +13,7 @@
 <div class = "wrapper">
     <header>
         <nav>
-            <h1>BestCocktails.com</h1>
+            <<h1><a href="index">BestCocktails.com</a></h1>
             <ul>
                 <li><a href="">Gin</a></li>
                 <li><a href="">Vodka</a></li>
@@ -19,11 +21,16 @@
                 <li><a href="">Rum</a></li>
                 <li><a href="">Tequila</a></li>
             </ul>
-            <div class="dropdown">
-                <p class="dropItem">Hello, username</p>
-                <div class="dropdown-content">
-                    <a href="">Create Article</a>
-                    <a href="">Log Out</a>
+            <div>
+                <a href="login" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
+                <div class="dropdown" >
+                    <p class="dropItem" sec:authorize="isAuthenticated()">
+                        Hello, <span sec:authentication="principal.username"> </span>
+                    </p>
+                    <div class="dropdown-content">
+                        <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
+                        <a href="/logout">Log Out</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -31,30 +38,24 @@
     <main>
         <section>
             <div>
-                <form>
+                <form method = "post" th:object="${articleEdit}" th:action="@{/articles/{id}/edit(id = ${articleEdit.id})}" enctype="multipart/form-data">
                     <label>Title:</label>
-                    <input type="text" name="title" class="title" value="getFromDB">
-                </form>
-                <form>
+                    <input type="text" name="title" class="title" th:value="*{title}">
                     <label>Text:</label>
-                    <textarea name="text" cols="60" rows="25">Load value from DB</textarea>
-                </form>
-                <form>
-                    <label for="drinks">Choose Drink Category:</label>
-                    <select id="drinks" name="drinks">
-                        <option value="gin">Gin</option>
-                        <option value="vodka">Vodka</option>
-                        <option value="whisky">Whisky</option>
-                        <option value="rum">Rum</option>
-                        <option value="tequila">Tequila</option>
+                    <textarea name="text" cols="60" rows="25" th:text="*{text}"></textarea>
+                    <label for="drinkCategory">Choose Drink Category:</label>
+                    <select id ="drinkCategory" name="drinks"  th:field="*{drinkCategory}">
+                        <option value="GIN">Gin</option>
+                        <option value="VODKA">Vodka</option>
+                        <option value="WHISKY">Whisky</option>
+                        <option value="RUM">Rum</option>
+                        <option value="TEQUILA">Tequila</option>
                     </select>
-                </form>
-                <form>
                     <label>Article picture:</label>
-                    <input type="file" name="file">
+                    <input type="file" name="image" id="image" th:field="*{image}">
+                    <button class="postArticleButton">Update Article</button>
                 </form>
             </div>
-            <a class="postArticleButton" href="">Update Article</a>
         </section>
     </main>
 </div>

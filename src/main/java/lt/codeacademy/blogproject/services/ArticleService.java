@@ -41,32 +41,28 @@ public class ArticleService {
     }
 
     @Transactional
-    public void deleteArticle(ArticleRequest articleRequest){
-        articleDao.delete(articleDao.getArticleById(articleRequest.getId()));
+    public void deleteArticle(Long id){
+        articleDao.delete(articleDao.getArticleById(id));
     }
 
-//    @Transactional
-//    public ArticleResponse updateArticle(ArticleRequest articleRequest) {
-//        ArticleResponse articleResponse = new ArticleResponse();
-//        Article articleToUpdate = articleDao.getArticleById(articleRequest.getId());
-//
-//        articleToUpdate.setTitle(articleRequest.getTitle());
-//        articleToUpdate.setText(articleRequest.getText());
-//        articleToUpdate.setCreator(blogUserDao.getBlogUserByUsername(articleRequest.getCreator()));
-//        articleToUpdate.setImage(articleRequest.getImage());
-//        articleToUpdate.setDrinkCategory(drinkCategoryDao.getDrinkCategoryByCategoryName(articleRequest.getDrinkCategory()));
-//
-//        articleDao.save(articleToUpdate);
-//
-//        articleResponse.setTitle(articleRequest.getTitle());
-//        articleResponse.setImage(articleRequest.getImage());
-//        articleResponse.setText(articleRequest.getText());
-//        articleResponse.setCreatedAt(LocalDateTime.now());
-//        articleResponse.setCreator(articleRequest.getCreator());
-//        articleResponse.setDrinkCategory(articleRequest.getDrinkCategory());
-//
-//        return articleResponse;
-//    }
+    @Transactional
+    public void updateArticle(ArticleRequest articleRequest) throws IOException {
+        Article articleToUpdate = articleDao.getArticleById(articleRequest.getId());
+
+        if(articleRequest.getTitle() != null) {
+            articleToUpdate.setTitle(articleRequest.getTitle());
+        }
+        if(articleRequest.getText() != null) {
+            articleToUpdate.setText(articleRequest.getText());
+        }
+        if(articleRequest.getImage() != null) {
+            articleToUpdate.setImage(fileStorageService.save(articleRequest.getImage()));
+        }
+        if(articleRequest.getDrinkCategory() != null) {
+            articleToUpdate.setDrinkCategory(drinkCategoryDao.getDrinkCategoryByCategoryName(articleRequest.getDrinkCategory().toUpperCase()));
+        }
+        articleDao.save(articleToUpdate);
+    }
 
     public List<ArticleResponse> getAllArticles(){
         return articleDao.getArticles()

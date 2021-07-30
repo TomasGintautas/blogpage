@@ -46,20 +46,23 @@ public class ArticleController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(value = "/deleteArticle")
-    public void deleteArticle (@RequestBody ArticleRequest articleRequest){
-        articleService.deleteArticle(articleRequest);
+    @GetMapping(value = "/articles/{id}/delete")
+    public String deleteArticle (@PathVariable("id") Long id){
+        articleService.deleteArticle(id);
+        return "redirect:/";
     }
 
-//    @PostMapping(value = "/articleUpdate")
-//    public ResponseEntity updateArticle(@RequestBody ArticleRequest articleRequest){
-//        try{
-//            return ResponseEntity.ok(articleService.updateArticle(articleRequest));
-//        }
-//        catch (Exception e){
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
+    @PostMapping(value = "/articles/{id}/edit")
+    public String updateArticle(@Valid ArticleRequest articleRequest) throws IOException {
+        articleService.updateArticle(articleRequest);
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "/articles/{id}/edit")
+    public String updateArticle(@PathVariable("id") Long id, Model model) throws IOException {
+        model.addAttribute("articleEdit", articleService.getOneArticle(id));
+        return "/articles/edit";
+    }
 
     @GetMapping(value = "/index")
     public String getAllArticles(Model model){
@@ -91,6 +94,6 @@ public class ArticleController {
 
     @GetMapping
     public String home(HttpServletRequest request, HttpSession session) {
-        return "redirect:/index";
+        return "index";
     }
 }

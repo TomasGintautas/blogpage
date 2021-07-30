@@ -29,35 +29,19 @@ public class BlogCommentService {
     }
 
     @Transactional
-    public BlogCommentResponse createBlogComment(BlogCommentRequest blogCommentRequest) {
-        BlogCommentResponse blogCommentResponse = new BlogCommentResponse();
-
+    public void createBlogComment(BlogCommentRequest blogCommentRequest) {
         blogCommentDao.save(new BlogComment
                 (blogCommentRequest.getText(),
                         blogUserDao.getBlogUserByUsername(blogCommentRequest.getCreator()),
                         articleDao.getArticleById(blogCommentRequest.getArticle_id())));
-
-        blogCommentResponse.setText(blogCommentRequest.getText());
-        blogCommentResponse.setCreator(blogCommentRequest.getCreator());
-        blogCommentResponse.setCreatedAt(LocalDateTime.now());
-        blogCommentResponse.setArticle_id(blogCommentRequest.getArticle_id());
-        return blogCommentResponse;
     }
 
     @Transactional
-    public BlogCommentResponse updateBlogComment(BlogCommentRequest blogCommentRequest) {
-        BlogCommentResponse blogCommentResponse = new BlogCommentResponse();
+    public void updateBlogComment(BlogCommentRequest blogCommentRequest) {
         BlogComment blogCommentToUpdate = blogCommentDao.getBlogCommentById(blogCommentRequest.getId());
 
         blogCommentToUpdate.setText(blogCommentRequest.getText());
-
         blogCommentDao.save(blogCommentToUpdate);
-
-        blogCommentResponse.setId(blogCommentRequest.getId());
-        blogCommentResponse.setCreator(blogCommentRequest.getCreator());
-        blogCommentResponse.setText(blogCommentToUpdate.getText());
-        blogCommentResponse.setArticle_id(blogCommentRequest.getArticle_id());
-        return blogCommentResponse;
     }
 
     @Transactional
