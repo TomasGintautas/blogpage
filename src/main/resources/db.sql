@@ -123,20 +123,57 @@ VALUES
 
 INSERT INTO blog_user (id, created_at, username, password)
 VALUES
-(1, CURRENT_TIMESTAMP, 'admin', 'admin');
+
+(20, CURRENT_TIMESTAMP, 'admin', 'admin'),
+(21, CURRENT_TIMESTAMP, 'user', 'user');
 
 --------------
 
 INSERT INTO blog_user_role (blog_user_id, role_id)
 VALUES
-(1, 1);
+(20, 1),
+(20, 2),
+(21, 2);
+
 --------------
 
-INSERT INTO article (created_at, title, text, image, blog_user_id, drink_category_id)
+INSERT INTO article (id, created_at, title, text, image, blog_user_id, drink_category_id)
 VALUES
-(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
-(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
-(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
-(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
-(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1),
-(CURRENT_TIMESTAMP, 'PLEASE', 'WORK', 'NO',1,1);
+(100, CURRENT_TIMESTAMP, 'Basil Smash', 'text text text text text text text text text text text text text text text text text text', 'BasilSmash.jpg',20,1),
+(101, CURRENT_TIMESTAMP, 'Bramble', 'text text text text text text text text text text text text text text text text text text', 'Bramble.jpg',20,1),
+(102, CURRENT_TIMESTAMP, 'Classic Gin Tonic', 'text text text text text text text text text text text text text text text text text text', 'GinTonic.jpg',20,1),
+(103, CURRENT_TIMESTAMP, 'Margarita', 'text text text text text text text text text text text text text text text text text text', 'Margarita.jpg',20,5),
+(104, CURRENT_TIMESTAMP, 'Mint Cucumber Vodka', 'text text text text text text text text text text text text text text text text text text', 'MintVodka.jpg',20,2),
+(105, CURRENT_TIMESTAMP, 'Old Fashioned', 'text text text text text text text text text text text text text text text text text text', 'OldFashioned.jpg',20,3),
+(106, CURRENT_TIMESTAMP, 'Screwdriver', 'text text text text text text text text text text text text text text text text text text', 'Screwdriver.jpg',20,2),
+(107, CURRENT_TIMESTAMP, 'Tequila Sunrise', 'text text text text text text text text text text text text text text text text text text', 'Sunrise.jpg',20,5),
+(108, CURRENT_TIMESTAMP, 'Turnbuckle', 'text text text text text text text text text text text text text text text text text text', 'Turnbuckle.jpg',20,4),
+(109, CURRENT_TIMESTAMP, 'Whisky Sour', 'text text text text text text text text text text text text text text text text text text', 'WhiskySour.jpg',20,3),
+(110, CURRENT_TIMESTAMP, 'Zombie', 'text text text text text text text text text text text text text text text text text text', 'Zombie.jpg',20,4);
+
+--------------
+
+INSERT INTO blog_comment (id, created_at, text,article_id, blog_user_id)
+VALUES
+(1,CURRENT_TIMESTAMP,'This is comment from admin account',100,20),
+(2,CURRENT_TIMESTAMP,'This is comment from user account',100,21),
+(3,CURRENT_TIMESTAMP,'This is comment from admin account',101,20),
+(4,CURRENT_TIMESTAMP,'This is comment from user account',101,21),
+(5,CURRENT_TIMESTAMP,'This is comment from admin account',102,20),
+(6,CURRENT_TIMESTAMP,'This is comment from user account',102,21),
+(7,CURRENT_TIMESTAMP,'This is comment from admin account',103,20),
+(8,CURRENT_TIMESTAMP,'This is comment from user account',103,21),
+(9,CURRENT_TIMESTAMP,'This is comment from admin account',104,20),
+(10,CURRENT_TIMESTAMP,'This is comment from user account',104,21),
+(11,CURRENT_TIMESTAMP,'This is comment from admin account',105,20),
+(12,CURRENT_TIMESTAMP,'This is comment from user account',105,21),
+(13,CURRENT_TIMESTAMP,'This is comment from admin account',106,20),
+(14,CURRENT_TIMESTAMP,'This is comment from user account',106,21),
+(15,CURRENT_TIMESTAMP,'This is comment from admin account',107,20),
+(16,CURRENT_TIMESTAMP,'This is comment from user account',107,21),
+(17,CURRENT_TIMESTAMP,'This is comment from admin account',108,20),
+(18,CURRENT_TIMESTAMP,'This is comment from user account',108,21),
+(19,CURRENT_TIMESTAMP,'This is comment from admin account',109,20),
+(20,CURRENT_TIMESTAMP,'This is comment from user account',109,21),
+(21,CURRENT_TIMESTAMP,'This is comment from admin account',110,20),
+(22,CURRENT_TIMESTAMP,'This is comment from user account',110,21);
