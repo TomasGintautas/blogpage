@@ -27,17 +27,17 @@
                 </div>
             </div>
             <ul>
-                <li><a href="" th:text="#{list.gin}"></a></li>
-                <li><a href="" th:text="#{list.vodka}"></a></li>
-                <li><a href="" th:text="#{list.whisky}"></a></li>
-                <li><a href="" th:text="#{list.rum}"></a></li>
-                <li><a href="" th:text="#{list.tequila}"></a></li>
+                <li><a th:text="#{list.gin}"></a></li>
+                <li><a th:text="#{list.vodka}"></a></li>
+                <li><a th:text="#{list.whisky}"></a></li>
+                <li><a th:text="#{list.rum}"></a></li>
+                <li><a th:text="#{list.tequila}"></a></li>
             </ul>
             <div>
                 <a href="login" class="loginButton" sec:authorize="isAnonymous()" th:text="#{button.login}">Log In</a>
                 <div class="dropdown">
-                    <p class="dropItem" sec:authorize="isAuthenticated()" th:text="#{hello.title}">
-                        <span sec:authentication="principal.username"> </span>
+                    <p class="dropItem" sec:authorize="isAuthenticated()">
+                        <span sec:authentication="principal.username"></span>
                     </p>
                     <div class="dropdown-content">
                         <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:text="#{dropdown.create}">
