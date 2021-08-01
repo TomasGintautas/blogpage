@@ -32,6 +32,7 @@ public class ArticleController {
         return "index";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/articles/create")
     public String createArticle(Model model){
         model.addAttribute("articleRequest", new ArticleRequest());
@@ -45,12 +46,14 @@ public class ArticleController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/articles/{id}/edit")
     public String updateArticle(@Valid ArticleRequest articleRequest) throws IOException {
         articleService.updateArticle(articleRequest);
         return "redirect:/";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/articles/{id}/edit")
     public String updateArticle(@PathVariable("id") Long id, Model model) throws IOException {
         model.addAttribute("articleEdit", articleService.getOneArticle(id));
@@ -71,6 +74,7 @@ public class ArticleController {
         return "articles/view";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/articles/{id}/view")
     public String createComment(@Valid BlogCommentRequest blogCommentRequest, @PathVariable("id") Long id){
         blogCommentRequest.setArticle_id(id);
