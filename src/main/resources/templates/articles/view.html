@@ -13,23 +13,37 @@
     <div class = "wrapper">
         <header>
             <nav>
-                <h1><a href="index">BestCocktails.com</a></h1>
+                <div>
+                    <h1><a href="index">BestCocktails.com</a></h1>
+                    <div class="dropdown">
+                        <a th:text="${#locale.toLanguageTag().toUpperCase()}"></a>
+                        <ul class="dropdown-content">
+                            <a class="dropdown-item" th:href="@{''(lang='lt')}"
+                               th:unless="${#locale.toString().equals('lt')}">LT</a>
+                            <a class="dropdown-item" th:href="@{''(lang='en')}"
+                               th:unless="${#locale.toString().equals('en')}">EN</a>
+                            <a class="dropdown-item" th:href="@{''(lang='de')}"
+                               th:unless="${#locale.toString().equals('de')}">DE</a>
+                        </ul>
+                    </div>
+                </div>
                 <ul>
-                    <li><a href="">Gin</a></li>
-                    <li><a href="">Vodka</a></li>
-                    <li><a href="">Whisky</a></li>
-                    <li><a href="">Rum</a></li>
-                    <li><a href="">Tequila</a></li>
+                    <li><a href="" th:text="#{list.gin}"></a></li>
+                    <li><a href="" th:text="#{list.vodka}"></a></li>
+                    <li><a href="" th:text="#{list.whisky}"></a></li>
+                    <li><a href="" th:text="#{list.rum}"></a></li>
+                    <li><a href="" th:text="#{list.tequila}"></a></li>
                 </ul>
                 <div>
-                    <a href="login" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
-                    <div class="dropdown" >
-                        <p class="dropItem" sec:authorize="isAuthenticated()">
-                            Hello, <span sec:authentication="principal.username"> </span>
+                    <a href="login" class="loginButton" sec:authorize="isAnonymous()" th:text="#{button.login}">Log In</a>
+                    <div class="dropdown">
+                        <p class="dropItem" sec:authorize="isAuthenticated()" th:text="#{hello.title}">
+                            <span sec:authentication="principal.username"> </span>
                         </p>
                         <div class="dropdown-content">
-                            <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
-                            <a href="/logout">Log Out</a>
+                            <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:text="#{dropdown.create}">
+                            </a>
+                            <a href="/logout" th:text="#{dropdown.logout}"></a>
                         </div>
                     </div>
                 </div>
@@ -43,8 +57,8 @@
                     <div th:text="${article.getText()}"></div>
                 </article>
                 <div class="crud" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                    <a th:href="@{/articles/{id}/delete(id = ${article.id})}" class="crudItem">delete</a>
-                    <a th:href="@{/articles/{id}/edit(id = ${article.id})}" class="crudItem">edit</a>
+                    <a th:href="@{/articles/{id}/delete(id = ${article.id})}" class="crudItem" th:text="#{button.delete}">delete</a>
+                    <a th:href="@{/articles/{id}/edit(id = ${article.id})}" class="crudItem" th:text="#{button.edit}">edit</a>
                 </div>
             </section>
             <section>
@@ -57,8 +71,8 @@
                         </div>
                         <div class="commentText" th:text="${comments.getText()}"></div>
                         <div class="crud">
-                            <a th:href="@{/comment/{id}/delete(id = ${comments.id})}" class="crudItem" th:if="${#authorization.expression('hasRole(''ADMIN'')')} or ${#authentication.getName()} == ${comments.creator}">delete</a>
-                            <a th:href="@{/comment/{id}/edit(id = ${comments.id})}" class="crudItem" th:if="${#authentication.getName()} == ${comments.creator} ">edit</a>
+                            <a th:href="@{/comment/{id}/delete(id = ${comments.id})}" class="crudItem" th:if="${#authorization.expression('hasRole(''ADMIN'')')} or ${#authentication.getName()} == ${comments.creator}" th:text="#{button.delete}">delete</a>
+                            <a th:href="@{/comment/{id}/edit(id = ${comments.id})}" class="crudItem" th:if="${#authentication.getName()} == ${comments.creator} " th:text="#{button.edit}">edit</a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +80,7 @@
                     <form class="leaveCommentDisplay" method="post" th:action="@{/articles/{id}/view(id = ${article.id})}" th:object="${newCommentRequest}">
                         <label>Leave a comment:</label>
                         <textarea name="text" rows="5" class="leaveComment" id="text" th:field ="*{text}"></textarea>
-                        <button class="createComment" th:href="@{/articles/{id}/view(id = ${article.id})}">Leave Comment</button>
+                        <button class="createComment" th:href="@{/articles/{id}/view(id = ${article.id})}" th:text="#{button.comment}">Leave Comment</button>
                     </form>
                 </div>
             </section>

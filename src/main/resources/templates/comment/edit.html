@@ -12,23 +12,37 @@
 <div class = "wrapper">
     <header>
         <nav>
-            <h1><a href="index">BestCocktails.com</a></h1>
+            <div>
+                <h1><a href="index">BestCocktails.com</a></h1>
+                <div class="dropdown">
+                    <a th:text="${#locale.toLanguageTag().toUpperCase()}"></a>
+                    <ul class="dropdown-content">
+                        <a class="dropdown-item" th:href="@{''(lang='lt')}"
+                           th:unless="${#locale.toString().equals('lt')}">LT</a>
+                        <a class="dropdown-item" th:href="@{''(lang='en')}"
+                           th:unless="${#locale.toString().equals('en')}">EN</a>
+                        <a class="dropdown-item" th:href="@{''(lang='de')}"
+                           th:unless="${#locale.toString().equals('de')}">DE</a>
+                    </ul>
+                </div>
+            </div>
             <ul>
-                <li><a href="">Gin</a></li>
-                <li><a href="">Vodka</a></li>
-                <li><a href="">Whisky</a></li>
-                <li><a href="">Rum</a></li>
-                <li><a href="">Tequila</a></li>
+                <li><a href="" th:text="#{list.gin}"></a></li>
+                <li><a href="" th:text="#{list.vodka}"></a></li>
+                <li><a href="" th:text="#{list.whisky}"></a></li>
+                <li><a href="" th:text="#{list.rum}"></a></li>
+                <li><a href="" th:text="#{list.tequila}"></a></li>
             </ul>
             <div>
-                <a href="login" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
-                <div class="dropdown" >
-                    <p class="dropItem" sec:authorize="isAuthenticated()">
-                        Hello, <span sec:authentication="principal.username"> </span>
+                <a href="login" class="loginButton" sec:authorize="isAnonymous()" th:text="#{button.login}">Log In</a>
+                <div class="dropdown">
+                    <p class="dropItem" sec:authorize="isAuthenticated()" th:text="#{hello.title}">
+                        <span sec:authentication="principal.username"> </span>
                     </p>
                     <div class="dropdown-content">
-                        <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
-                        <a href="/logout">Log Out</a>
+                        <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:text="#{dropdown.create}">
+                        </a>
+                        <a href="/logout" th:text="#{dropdown.logout}"></a>
                     </div>
                 </div>
             </div>
@@ -37,9 +51,9 @@
     <main>
         <div>
             <form class="leaveCommentDisplay" method="post" th:object="${comment}" th:action="@{/comment/{id}/edit(id = ${comment.id})}">
-                <label>Edit comment:</label>
+                <label th:text="#{title.edit.comment}">Edit comment:</label>
                 <textarea name="text" rows="5" class="leaveComment" th:text="*{text}"></textarea>
-                <button class="createComment">Update</button>
+                <button class="createComment" th:text="#{button.update}">Update</button>
             </form>
         </div>
     </main>

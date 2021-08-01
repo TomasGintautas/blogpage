@@ -1,54 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <title>Cocktails blog</title>
-        <link rel="stylesheet" type = "text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
-        <meta charset="utf-8">
-    </head>
-    <body>
-    <div class = "wrapper">
-        <header>
-            <nav>
+<head>
+    <title>Cocktails blog</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <nav>
+            <div>
                 <h1><a href="index">BestCocktails.com</a></h1>
-                <ul>
-                    <li><a href="">Gin</a></li>
-                    <li><a href="">Vodka</a></li>
-                    <li><a href="">Whisky</a></li>
-                    <li><a href="">Rum</a></li>
-                    <li><a href="">Tequila</a></li>
-                </ul>
-                <div>
-                    <a href="login" class="loginButton" sec:authorize="isAnonymous()">Log In</a>
-                    <div class="dropdown" >
-                        <p class="dropItem" sec:authorize="isAuthenticated()">
-                            Hello, <span sec:authentication="principal.username"> </span>
-                        </p>
-                        <div class="dropdown-content">
-                            <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Create Article</a>
-                            <a href="/logout">Log Out</a>
-                        </div>
+                <div class="dropdown">
+                    <a th:text="${#locale.toLanguageTag().toUpperCase()}"></a>
+                    <ul class="dropdown-content">
+                        <a class="dropdown-item" th:href="@{''(lang='lt')}"
+                           th:unless="${#locale.toString().equals('lt')}">LT</a>
+                        <a class="dropdown-item" th:href="@{''(lang='en')}"
+                           th:unless="${#locale.toString().equals('en')}">EN</a>
+                        <a class="dropdown-item" th:href="@{''(lang='de')}"
+                           th:unless="${#locale.toString().equals('de')}">DE</a>
+                    </ul>
+                </div>
+            </div>
+            <ul>
+                <li><a href="" th:text="#{list.gin}"></a></li>
+                <li><a href="" th:text="#{list.vodka}"></a></li>
+                <li><a href="" th:text="#{list.whisky}"></a></li>
+                <li><a href="" th:text="#{list.rum}"></a></li>
+                <li><a href="" th:text="#{list.tequila}"></a></li>
+            </ul>
+            <div>
+                <a href="login" class="loginButton" sec:authorize="isAnonymous()" th:text="#{button.login}">Log In</a>
+                <div class="dropdown">
+                    <p class="dropItem" sec:authorize="isAuthenticated()" th:text="#{hello.title}">
+                        <span sec:authentication="principal.username"> </span>
+                    </p>
+                    <div class="dropdown-content">
+                        <a href="/articles/create" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:text="#{dropdown.create}">
+                            </a>
+                        <a href="/logout" th:text="#{dropdown.logout}"></a>
                     </div>
                 </div>
-            </nav>
-        </header>
-        <main>
-            <section class="mainGrid">
-                <article th:each="articles: ${articleList}" th:onclick="'location.href = \'/articles/' + ${articles.id} + '/view\';'">
-                    <div>
-                        <img class="gridImg" th:src="@{/uploads/{image}(image = ${articles.image})}">
-                    </div>
-                    <h3 class="articleTitle" th:text="${articles.getTitle()}"></h3>
-                    <div class = "drinkCategory" th:text="${articles.getDrinkCategory()}"></div>
-                    <div class="articleFooter">
-                        <div class="articleAuthor" th:text="${articles.getCreator()}"></div>
-                        <div class="articleCreationDate" th:text="${articles.getCreatedAt()}"></div>
-                    </div>
-                </article>
-            </section>
-        </main>
-    </div>
-    </body>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="mainGrid">
+            <article th:each="articles: ${articleList}"
+                     th:onclick="'location.href = \'/articles/' + ${articles.id} + '/view\';'">
+                <div>
+                    <img class="gridImg" th:src="@{/uploads/{image}(image = ${articles.image})}">
+                </div>
+                <h3 class="articleTitle" th:text="${articles.getTitle()}"></h3>
+                <div class="drinkCategory" th:text="${articles.getDrinkCategory()}"></div>
+                <div class="articleFooter">
+                    <div class="articleAuthor" th:text="${articles.getCreator()}"></div>
+                    <div class="articleCreationDate" th:text="${articles.getCreatedAt()}"></div>
+                </div>
+            </article>
+        </section>
+    </main>
+</div>
+</body>
 </html>

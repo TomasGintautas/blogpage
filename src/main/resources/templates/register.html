@@ -12,13 +12,26 @@
 <div class = "wrapper">
     <header>
         <nav>
-            <h1><a href="index">BestCocktails.com</a></h1>
+            <div>
+                <h1><a href="index">BestCocktails.com</a></h1>
+                <div class="dropdown">
+                    <a th:text="${#locale.toLanguageTag().toUpperCase()}"></a>
+                    <ul class="dropdown-content">
+                        <a class="dropdown-item" th:href="@{''(lang='lt')}"
+                           th:unless="${#locale.toString().equals('lt')}">LT</a>
+                        <a class="dropdown-item" th:href="@{''(lang='en')}"
+                           th:unless="${#locale.toString().equals('en')}">EN</a>
+                        <a class="dropdown-item" th:href="@{''(lang='de')}"
+                           th:unless="${#locale.toString().equals('de')}">DE</a>
+                    </ul>
+                </div>
+            </div>
             <ul>
-                <li><a href="">Gin</a></li>
-                <li><a href="">Vodka</a></li>
-                <li><a href="">Whisky</a></li>
-                <li><a href="">Rum</a></li>
-                <li><a href="">Tequila</a></li>
+                <li><a href="" th:text="#{list.gin}"></a></li>
+                <li><a href="" th:text="#{list.vodka}"></a></li>
+                <li><a href="" th:text="#{list.whisky}"></a></li>
+                <li><a href="" th:text="#{list.rum}"></a></li>
+                <li><a href="" th:text="#{list.tequila}"></a></li>
             </ul>
         </nav>
     </header>
@@ -26,14 +39,13 @@
         <section>
             <div class="regForms">
                 <form method="POST" th:action="@{/register}" th:object="${blogUserRequest}">
-                    <label>Username:</label>
+                    <label th:text="#{login.username}">Username:</label>
                     <input type="username" id = "username" name="username" th:field = "*{username}">
-                    <label>Password:</label>
+                    <label th:text="#{login.passwod}">Password:</label>
                     <input type="password" name="password" id="password" th:field="*{password}">
-                    <p>Password must contain at least one number and capital letter</p>
-                    <label>Confirm Password:</label>
+                    <label th:text="#{login.confirm}">Confirm Password:</label>
                     <input type="password" name="confirmPassword" id = "confirmPassword" th:field="*{confirmPassword}">
-                   <button type="submit" class="button">Register</button>
+                   <button type="submit" class="button" th:text="#{button.register}">Register</button>
                 </form>
             </div>
         </section>
